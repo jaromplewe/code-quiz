@@ -1,3 +1,4 @@
+// links to the DOM
 let question = document.getElementById('question');
 let answers = document.getElementsByClassName('multiple-choice');
 
@@ -78,10 +79,12 @@ const questionsAndAnswers = [
 
 // start the quiz
 function createQuestions() {
-    // pull a random question/answer array from questionsAndAnswers
+    // pull a random number from the questionsAndAnswers array and display the according question
     let questionNumber = Math.floor(Math.random() * questionsAndAnswers.length);
 
-    // set the answers
+    question.textContent = questionsAndAnswers[questionNumber].question;
+
+    // set the answers to an array
     let answerArr = [
         questionsAndAnswers[questionNumber].correctAnswer,
         questionsAndAnswers[questionNumber].answer2,
@@ -89,13 +92,7 @@ function createQuestions() {
         questionsAndAnswers[questionNumber].answer4
     ]
 
-    // set the question randomly
-    question.textContent = questionsAndAnswers[questionNumber].question;
-
-
-
-    // shuffle the question order
-
+    // shuffle the question order using the fisher-yates alg.
     function shuffle(array) {
         let newPos,
             temp;
@@ -106,12 +103,12 @@ function createQuestions() {
             array[i] = array[newPos];
             array[newPos] = temp;
         }
-        console.log(array);
         return array;
     }
 
     shuffle(answerArr);
 
+    // display the shuffled answers
     answers[0].textContent = answerArr[0];
     answers[1].textContent = answerArr[1];
     answers[2].textContent = answerArr[2];
@@ -123,13 +120,18 @@ function createQuestions() {
         answers[i].addEventListener('click', function () {
             if (answers[i].textContent == questionsAndAnswers[questionNumber].correctAnswer) {
                 answers[i].classList.add("btn-outline-success");
-                answers[i].textContent = "Correct! " + questionsAndAnswers[questionNumber].correctAnswer;
+                answers[i].textContent = "Correct! " + answers[i].textContent;
             } else {
                 answers[i].classList.add("btn-outline-danger");
                 answers[i].textContent = "Incorrect " + answers[i].textContent;
             }
         });
     }
+
+    // once something is clicked, you can't change your answer
+
+    // after question is answered and next button is clicked, remove item from questionsAndAnswers array
+
 }
 
 
