@@ -117,7 +117,9 @@ function createQuestions() {
     // if correct, display correct. 
     // else, display incorrect
     for (let i = 0; i < answers.length; i++) {
-        answers[i].addEventListener('click', function () {
+        answers[i].addEventListener('click', checkAnswer)
+
+        function checkAnswer() {
             if (answers[i].textContent == questionsAndAnswers[questionNumber].correctAnswer) {
                 answers[i].classList.add("btn-outline-success");
                 answers[i].textContent = "Correct! " + answers[i].textContent;
@@ -125,12 +127,12 @@ function createQuestions() {
                 answers[i].classList.add("btn-outline-danger");
                 answers[i].textContent = "Incorrect " + answers[i].textContent;
             }
-        });
+        };
     }
 
-    // once something is clicked, you can't change your answer
+    // once an answer is clicked, you can't change your answer
 
-    // after question is answered and next button is clicked, remove item from questionsAndAnswers array
+    // after question is answered and 'Next Question' button is clicked, remove item from questionsAndAnswers array
 
 }
 
