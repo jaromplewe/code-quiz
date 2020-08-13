@@ -1,10 +1,10 @@
 // links to the DOM
-let question = document.getElementById('question');
-let answers = document.getElementsByClassName('multiple-choice');
-let nextQuestionBtn = document.getElementById('next-question-btn');
+const question = document.getElementById('question');
+const answers = document.getElementsByClassName('multiple-choice');
+const nextQuestionBtn = document.getElementById('next-question-btn');
 
 // set an object array for questions and answers
-var questionsAndAnswers = [
+const questionsAndAnswers = [
     {
         "question": "question 1",
         "correctAnswer": "answer 1-1 - correct!",
@@ -77,59 +77,68 @@ var questionsAndAnswers = [
         "answer4": "answer 4",
     }
 ];
+const qAndAShuffled = shuffle(questionsAndAnswers);
 var questionNumber;
 
+// Shuffle arrays using the fisher-yates alg.
+function shuffle(array) {
+    let newPos,
+        temp;
+    for (let i = array.length - 1; i > 0; i--) {
+        newPos = Math.floor(Math.random() * (i + 1));
+        temp = array[i];
+        array[i] = array[newPos];
+        array[newPos] = temp;
+    }
+    return array;
+}
+
 // start the quiz
-function createQuestions(questionsArray) {
+function displayQuestions() {
 
-    console.log(questionsArray.length)
-
-    // pull a random number from the questionsArray array and display the according question
-    let questionNumber = Math.floor(Math.random() * questionsArray.length);
-
-    question.textContent = questionsArray[questionNumber].question;
-
-    // set the answers to an array
-    let answerArr = [
-        questionsArray[questionNumber].correctAnswer,
-        questionsArray[questionNumber].answer2,
-        questionsArray[questionNumber].answer3,
-        questionsArray[questionNumber].answer4
-    ]
-
-    // shuffle the question order using the fisher-yates alg.
-    function shuffle(array) {
-        let newPos,
-            temp;
-
-        for (let i = array.length - 1; i > 0; i--) {
-            newPos = Math.floor(Math.random() * (i + 1));
-            temp = array[i];
-            array[i] = array[newPos];
-            array[newPos] = temp;
-        }
-        return array;
+    if (questionNumber === undefined) {
+        questionNumber = 0;
+    } else if (questionNumber >= 0) {
+        questionNumber++;
+        console.log(questionNumber)
+    } 
+    if (questionNumber >= 10) {
+        alert('all out of questions');
     }
 
-    shuffle(answerArr);
+    console.log(qAndAShuffled)
+    let answerArr = [
+        qAndAShuffled[questionNumber].correctAnswer,
+        qAndAShuffled[questionNumber].answer2,
+        qAndAShuffled[questionNumber].answer3,
+        qAndAShuffled[questionNumber].answer4
+    ]
+
+    // display the question title
+    question.textContent = qAndAShuffled[questionNumber].question;
 
     // display the shuffled answers
+    shuffle(answerArr);
     answers[0].textContent = answerArr[0];
     answers[1].textContent = answerArr[1];
     answers[2].textContent = answerArr[2];
     answers[3].textContent = answerArr[3];
 
-    // if correct, display correct. 
-    // else, display incorrect
+}
+
+// Mark answer correct or incorrect
+function markAnswer() {
+
+    // define answered to determine if user has clicked on an answer
     let answered = false;
 
-    
+    // change button color acording to users choice
     for (let i = 0; i < answers.length; i++) {
         answers[i].addEventListener('click', checkAnswer)
-        
+
         function checkAnswer() {
             if (answered === false) {
-                if (answers[i].textContent == questionsArray[questionNumber].correctAnswer) {
+                if (answers[i].textContent == qAndAShuffled[questionNumber].correctAnswer) {
                     answers[i].classList.add("btn-outline-success");
                     answers[i].textContent = "Correct! " + answers[i].textContent;
                 } else {
@@ -139,33 +148,32 @@ function createQuestions(questionsArray) {
             }
             answered = true;
         };
-    }
-
-    // record score to local storage
-
-
-    // once an answer is clicked, you can't change your answer
-
-    // after question is answered and 'Next Question' button is clicked, remove item from questionsArray array
-    console.log(questionsArray)
-    return;
-    
+    };
 }
 
-nextQuestionBtn.addEventListener('click', removeArr)
-function removeArr() {
-    questionsAndAnswers.splice((questionNumber - 1), 1)
-
+// move user to the next question
+function nextQuestion() {
+    // remove coloring
     for (let i = 0; i < answers.length; i++) {
         answers[i].classList.remove("btn-outline-success");
         answers[i].classList.remove("btn-outline-danger");
     }
     answered = false;
-    createQuestions(questionsAndAnswers);
+    makeStuffHappen();
 }
 
 
-createQuestions(questionsAndAnswers);
+// MAKE STUFF HAPPEN
+function makeStuffHappen() {
 
-// nextQuestionBtn.addEventListener('click', createQuestions(questionsAndAnswers));
+    // Display the questions on the screen using displayQuestions
+    displayQuestions();
+
+    // color the answer green or red using markAnswer
+    markAnswer();
+
+    // go to the next question using next question button
+    nextQuestionBtn.addEventListener('click', nextQuestion)
+}
+makeStuffHappen();
 
