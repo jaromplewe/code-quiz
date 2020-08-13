@@ -8,6 +8,7 @@ const timer = document.getElementById('timer');
 
 let questionNumber;
 let score = 0;
+let timeLeft = 60;
 
 // set an object array for questions and answers
 const questionsAndAnswers = [
@@ -130,9 +131,6 @@ function display() {
     answers[1].textContent = answerArr[1];
     answers[2].textContent = answerArr[2];
     answers[3].textContent = answerArr[3];
-
-    // display current score
-    
 }
 
 // Mark answer correct or incorrect
@@ -167,7 +165,7 @@ function markAnswer() {
     };
 }
 
-// move user to the next question
+// Move user to the next question
 function nextQuestion() {
     // remove coloring
     for (let i = 0; i < answers.length; i++) {
@@ -177,6 +175,17 @@ function nextQuestion() {
     answered = false;
     makeStuffHappen();
 }
+
+// Run timer
+timer.textContent = "Timer: " + timeLeft;
+let timeInterval = setInterval(function countdown() {
+    timeLeft--;
+    timer.textContent = "Timer: " + timeLeft;
+    if (timeLeft == 0) {
+        clearInterval(timeInterval);
+    }
+}, 1000);
+
 
 
 // MAKE STUFF HAPPEN
