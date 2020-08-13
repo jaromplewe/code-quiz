@@ -6,9 +6,11 @@ const highScore = document.getElementById('high-score');
 const currentScore = document.getElementById('current-score');
 const timer = document.getElementById('timer');
 
+// Global vaiables
 let questionNumber;
 let score = 0;
 let timeLeft = 60;
+let answered = false;
 
 // set an object array for questions and answers
 const questionsAndAnswers = [
@@ -86,7 +88,6 @@ const questionsAndAnswers = [
 ];
 const qAndAShuffled = shuffle(questionsAndAnswers);
 
-
 // Shuffle arrays using the fisher-yates alg.
 function shuffle(array) {
     let newPos,
@@ -101,7 +102,7 @@ function shuffle(array) {
 }
 
 // start the quiz
-function display() {
+function displayQuestions() {
 
     // Define Current questionNumber
     if (questionNumber === undefined) {
@@ -109,7 +110,7 @@ function display() {
     } else if (questionNumber >= 0) {
         questionNumber++;
         console.log(questionNumber)
-    } 
+    }
     if (questionNumber >= 10) {
         alert('all out of questions');
     }
@@ -137,10 +138,10 @@ function display() {
 function markAnswer() {
 
     // define answered to determine if user has clicked on an answer
-    let answered = false;
+    // let answered = false;
 
     // change button color acording to users choice
-        // add to local storage score
+    // add to local storage score
     for (let i = 0; i < answers.length; i++) {
         answers[i].addEventListener('click', checkAnswer)
 
@@ -167,24 +168,28 @@ function markAnswer() {
 
 // Move user to the next question
 function nextQuestion() {
-    // remove coloring
-    for (let i = 0; i < answers.length; i++) {
-        answers[i].classList.remove("btn-outline-success");
-        answers[i].classList.remove("btn-outline-danger");
+    if (answered === true) {
+        // remove coloring
+        for (let i = 0; i < answers.length; i++) {
+            answers[i].classList.remove("btn-outline-success");
+            answers[i].classList.remove("btn-outline-danger");
+        }
+        answered = false;
+        makeStuffHappen();
     }
-    answered = false;
-    makeStuffHappen();
 }
 
-// Run timer
-timer.textContent = "Timer: " + timeLeft;
-let timeInterval = setInterval(function countdown() {
-    timeLeft--;
+// Start timer, stop when time hits 0
+function startTimer() {
     timer.textContent = "Timer: " + timeLeft;
-    if (timeLeft == 0) {
-        clearInterval(timeInterval);
-    }
-}, 1000);
+    let timeInterval = setInterval(function countdown() {
+        timeLeft--;
+        timer.textContent = "Timer: " + timeLeft;
+        if (timeLeft == 0) {
+            clearInterval(timeInterval);
+        }
+    }, 1000);
+}
 
 
 
@@ -192,13 +197,18 @@ let timeInterval = setInterval(function countdown() {
 function makeStuffHappen() {
 
     // Display the questions on the screen using displayQuestions
-    display();
+    displayQuestions();
 
     // Display correct and incorrect, log to local storage.
     markAnswer();
 
     // go to the next question using next question button
     nextQuestionBtn.addEventListener('click', nextQuestion)
+
 }
+
+// Original start
 makeStuffHappen();
 
+// Run the timer
+startTimer();
