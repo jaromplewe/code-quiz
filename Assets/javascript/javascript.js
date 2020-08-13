@@ -2,6 +2,9 @@
 const question = document.getElementById('question');
 const answers = document.getElementsByClassName('multiple-choice');
 const nextQuestionBtn = document.getElementById('next-question-btn');
+const highScore = document.getElementById('high-score');
+const currentScore = document.getElementById('current-score');
+const timer = document.getElementById('timer');
 
 let questionNumber;
 let score = 0;
@@ -97,8 +100,9 @@ function shuffle(array) {
 }
 
 // start the quiz
-function displayQuestions() {
+function display() {
 
+    // Define Current questionNumber
     if (questionNumber === undefined) {
         questionNumber = 0;
     } else if (questionNumber >= 0) {
@@ -109,7 +113,7 @@ function displayQuestions() {
         alert('all out of questions');
     }
 
-    console.log(qAndAShuffled)
+    // define answerArr
     let answerArr = [
         qAndAShuffled[questionNumber].correctAnswer,
         qAndAShuffled[questionNumber].answer2,
@@ -127,6 +131,8 @@ function displayQuestions() {
     answers[2].textContent = answerArr[2];
     answers[3].textContent = answerArr[3];
 
+    // display current score
+    
 }
 
 // Mark answer correct or incorrect
@@ -143,11 +149,15 @@ function markAnswer() {
         function checkAnswer() {
             if (answered === false) {
                 if (answers[i].textContent == qAndAShuffled[questionNumber].correctAnswer) {
+                    // revert colors
                     answers[i].classList.add("btn-outline-success");
                     answers[i].textContent = "Correct! " + answers[i].textContent;
+                    // change score
                     score++
+                    currentScore.textContent = "Current Score: " + score;
                     localStorage.setItem('score', score);
                 } else {
+                    // revert colors
                     answers[i].classList.add("btn-outline-danger");
                     answers[i].textContent = "Incorrect " + answers[i].textContent;
                 }
@@ -173,7 +183,7 @@ function nextQuestion() {
 function makeStuffHappen() {
 
     // Display the questions on the screen using displayQuestions
-    displayQuestions();
+    display();
 
     // Display correct and incorrect, log to local storage.
     markAnswer();
