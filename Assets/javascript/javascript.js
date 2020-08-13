@@ -3,6 +3,9 @@ const question = document.getElementById('question');
 const answers = document.getElementsByClassName('multiple-choice');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 
+let questionNumber;
+let score = 0;
+
 // set an object array for questions and answers
 const questionsAndAnswers = [
     {
@@ -78,7 +81,7 @@ const questionsAndAnswers = [
     }
 ];
 const qAndAShuffled = shuffle(questionsAndAnswers);
-var questionNumber;
+
 
 // Shuffle arrays using the fisher-yates alg.
 function shuffle(array) {
@@ -133,6 +136,7 @@ function markAnswer() {
     let answered = false;
 
     // change button color acording to users choice
+        // add to local storage score
     for (let i = 0; i < answers.length; i++) {
         answers[i].addEventListener('click', checkAnswer)
 
@@ -141,6 +145,8 @@ function markAnswer() {
                 if (answers[i].textContent == qAndAShuffled[questionNumber].correctAnswer) {
                     answers[i].classList.add("btn-outline-success");
                     answers[i].textContent = "Correct! " + answers[i].textContent;
+                    score++
+                    localStorage.setItem('score', score);
                 } else {
                     answers[i].classList.add("btn-outline-danger");
                     answers[i].textContent = "Incorrect " + answers[i].textContent;
@@ -169,7 +175,7 @@ function makeStuffHappen() {
     // Display the questions on the screen using displayQuestions
     displayQuestions();
 
-    // color the answer green or red using markAnswer
+    // Display correct and incorrect, log to local storage.
     markAnswer();
 
     // go to the next question using next question button
