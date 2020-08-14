@@ -8,7 +8,7 @@ const currentScore = document.getElementById('current-score');
 const timer = document.getElementById('timer');
 const blueButtonCol = document.getElementById('blue-button-col');
 
-// Create elements
+// Create elements in the DOM
 let startButton = document.createElement('div');
 
 // Global vaiables
