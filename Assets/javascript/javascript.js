@@ -14,6 +14,7 @@ let startButton = document.createElement('div');
 // Global vaiables
 let questionNumber;
 let score = 0;
+let highScoreScore = 0;
 let timeLeft = 60;
 let answered = false;
 let currentHighScore;
@@ -21,26 +22,26 @@ let currentHighScore;
 // set an object array for questions and answers
 const questionsAndAnswers = [
     {
-        "question": "question 1",
-        "correctAnswer": "answer 1-1 - correct!",
-        "answer2": "answer 2",
-        "answer3": "answer 3",
-        "answer4": "answer 4",
+        "question": "How can you set a breakpoint in your code?",
+        "correctAnswer": "debugger;",
+        "answer2": "<br>",
+        "answer3": "breakpoint;",
+        "answer4": "console.log()",
     },
     {
-        "question": "question 2",
-        "correctAnswer": "answer 1-2 - correct!",
-        "answer2": "answer 2",
-        "answer3": "answer 3",
-        "answer4": "answer 4",
+        "question": "I'd like to add 1 to a games score, which of the following WILL NOT accomplish my task?",
+        "correctAnswer": "score++ 1",
+        "answer2": "score++;",
+        "answer3": "score =+ 1;",
+        "answer4": "score = score + 1;",
 
     },
     {
-        "question": "question 3",
-        "correctAnswer": "answer 1-3 - correct!",
-        "answer2": "answer 2",
-        "answer3": "answer 3",
-        "answer4": "answer 4",
+        "question": "Which of the following is the correct syntax for a 'for loop?'",
+        "correctAnswer": "for (let i = 0; i < 10; i++)",
+        "answer2": "for (let i = 0; i < 10; i = 1)",
+        "answer3": "for (let i = 0; i + 10; i++)",
+        "answer4": "for (i = 0; i < 10; i++)",
     },
     {
         "question": "question 4",
@@ -113,8 +114,6 @@ function startScreen() {
     console.log(startButton)
 
     startButton.addEventListener('click', makeStuffHappen);
-    
-    return;
 
 }
 
@@ -138,6 +137,8 @@ function displayQuestions() {
         buttons[i].classList.remove('hide');
     };
 
+    // Hide startButton
+    startButton.classList.add('hide');
 
     // Define Current questionNumber
     if (questionNumber === undefined) {
@@ -145,8 +146,12 @@ function displayQuestions() {
     } else if (questionNumber >= 0) {
         questionNumber++;
         console.log(questionNumber)
-    }
-    if (questionNumber >= 10) {
+    } 
+    
+    // change button to submit score
+    if (questionNumber >= 9) {
+        nextQuestionBtn.textContent = 'Submit Score';
+    } if (questionNumber >= 10) {
         alert('all out of questions');
     }
 
@@ -187,9 +192,11 @@ function markAnswer() {
                     answers[i].classList.add("btn-outline-success");
                     answers[i].textContent = "Correct! " + answers[i].textContent;
                     // change score
-                    score++
+                    score++;
                     currentScore.textContent = "Current Score: " + score;
-                    localStorage.setItem('score', score);
+                    highScore.textContent = "High Score: " + highScoreScore;
+                    localStorage.setItem('Score', score);
+                    localStorage.setItem('High Score', highScoreScore);
                 } else {
                     // revert colors
                     answers[i].classList.add("btn-outline-danger");
@@ -201,6 +208,16 @@ function markAnswer() {
     };
 }
 
+// Log High score to local storage
+function highScoreStorage() {
+    
+    if (localStorage.getItem('High Score') === '...') {
+        localStorage.setItem('High Score', score)
+    } else if (localStorage.getItem('High Score') >= score) {
+        localStorage.setItem('High Score', localStorage.getItem('High Score'))
+    }
+}
+
 // Move user to the next question
 function nextQuestion() {
     if (answered === true) {
@@ -210,6 +227,7 @@ function nextQuestion() {
             answers[i].classList.remove("btn-outline-danger");
         }
         answered = false;
+
         makeStuffHappen();
     }
 }
@@ -229,8 +247,6 @@ function startTimer() {
 
 // MAKE STUFF HAPPEN
 function makeStuffHappen() {
-    // Hide startButton
-    startButton.classList.add('hide');
 
     // Display the questions on the screen using displayQuestions
     displayQuestions();
@@ -240,6 +256,9 @@ function makeStuffHappen() {
 
     // go to the next question using next question button
     nextQuestionBtn.addEventListener('click', nextQuestion)
+
+    // Log high score to local storage
+    highScoreStorage();
 
 }
 
