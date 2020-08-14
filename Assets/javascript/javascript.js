@@ -1,16 +1,22 @@
 // links to the DOM
 const question = document.getElementById('question');
 const answers = document.getElementsByClassName('multiple-choice');
+const buttons = document.querySelectorAll('button');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 const highScore = document.getElementById('high-score');
 const currentScore = document.getElementById('current-score');
 const timer = document.getElementById('timer');
+const blueButtonCol = document.getElementById('blue-button-col');
+
+// Create elements
+let startButton = document.createElement('div');
 
 // Global vaiables
 let questionNumber;
 let score = 0;
 let timeLeft = 60;
 let answered = false;
+let currentHighScore;
 
 // set an object array for questions and answers
 const questionsAndAnswers = [
@@ -88,6 +94,30 @@ const questionsAndAnswers = [
 ];
 const qAndAShuffled = shuffle(questionsAndAnswers);
 
+// Display Start screen
+function startScreen() {
+    // hide buttons
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.add('hide');
+    };
+
+    // Display start text
+    question.textContent = "The object is simple: Answer 10 questions in 60 seconds. Let's find out what you're really capable of. Are you up for the task? Press the Start Quiz button to enter hell.";
+
+    // Create start quiz button
+    startButton.classList.add('btn-primary');
+    startButton.classList.add('btn');
+    startButton.textContent = 'Start Quiz';
+    blueButtonCol.appendChild(startButton)
+
+    console.log(startButton)
+
+    startButton.addEventListener('click', makeStuffHappen);
+    
+    return;
+
+}
+
 // Shuffle arrays using the fisher-yates alg.
 function shuffle(array) {
     let newPos,
@@ -103,6 +133,11 @@ function shuffle(array) {
 
 // start the quiz
 function displayQuestions() {
+    // Unhide the buttons
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('hide');
+    };
+
 
     // Define Current questionNumber
     if (questionNumber === undefined) {
@@ -192,9 +227,10 @@ function startTimer() {
 }
 
 
-
 // MAKE STUFF HAPPEN
 function makeStuffHappen() {
+    // Hide startButton
+    startButton.classList.add('hide');
 
     // Display the questions on the screen using displayQuestions
     displayQuestions();
@@ -208,7 +244,7 @@ function makeStuffHappen() {
 }
 
 // Original start
-makeStuffHappen();
+startScreen();
 
 // Run the timer
-startTimer();
+// startTimer();
