@@ -22,3 +22,7 @@
 .hide {
     visibility: hidden;
 }
+
+.bring-to-top {
+    margin-top: -200px;
+}

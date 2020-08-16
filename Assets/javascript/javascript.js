@@ -214,6 +214,39 @@ function startTimer() {
     }, 1000);
 }
 
+// function highScores() {
+
+//     leaderboard1.classList.add('hide')
+//     leaderboard2.classList.remove('hide')
+
+//     // get allScores from localStorage
+//     allScores = localStorage.getItem('allScores');
+//     allScoresParse = JSON.parse(allScores);
+
+//     // function to sort scores in decending order
+//     function compare(a, b) {
+//         const scoreA = Number(a.score);
+//         const scoreB = Number(b.score);
+
+//         let comparison = 0;
+//         if (scoreA > scoreB) {
+//             comparison = -1;
+//         } else if (scoreA < scoreB) {
+//             comparison = 1;
+//         }
+//         return comparison;
+//     }
+//     allScoresParse.sort(compare);
+
+
+//     for (let i = 0; i < allScoresParse.length; i++) {
+//         let scoreList = document.createElement('div');
+//         scoreList.classList.add('card-body');
+//         scoreList.textContent = allScoresParse[i].score + ": " + allScoresParse[i].initials;
+//         cardContainer.appendChild(scoreList);
+//     }
+// };
+
 
 // MAKE STUFF HAPPEN
 function makeStuffHappen() {
