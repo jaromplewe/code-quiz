@@ -6,18 +6,18 @@ const nextQuestionBtn = document.getElementById('next-question-btn');
 const highScore = document.getElementById('high-score');
 const currentScore = document.getElementById('current-score');
 const timer = document.getElementById('timer');
-const blueButtonCol = document.getElementById('blue-button-col');
+const buttonsNextQuestion = document.getElementById('buttons-nextQuestion');
+const startButton = document.getElementById('start-quiz-btn');
 
-// Create elements in the DOM
-let startButton = document.createElement('div');
 
 // Global vaiables
 let questionNumber;
 let score = 0;
-let highScoreScore = 0;
+let highScoreScore = "";
 let timeLeft = 60;
 let answered = false;
 let currentHighScore;
+let initialsValue;
 
 // set an object array for questions and answers
 const questionsAndAnswers = [
@@ -95,28 +95,6 @@ const questionsAndAnswers = [
 ];
 const qAndAShuffled = shuffle(questionsAndAnswers);
 
-// Display Start screen
-function startScreen() {
-    // hide buttons
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.add('hide');
-    };
-
-    // Display start text
-    question.textContent = "The object is simple: Answer 10 questions in 60 seconds. Let's find out what you're really capable of. Are you up for the task? Press the Start Quiz button to enter hell.";
-
-    // Create start quiz button
-    startButton.classList.add('btn-primary');
-    startButton.classList.add('btn');
-    startButton.textContent = 'Start Quiz';
-    blueButtonCol.appendChild(startButton)
-
-    console.log(startButton)
-
-    startButton.addEventListener('click', makeStuffHappen);
-
-}
-
 // Shuffle arrays using the fisher-yates alg.
 function shuffle(array) {
     let newPos,
@@ -132,10 +110,10 @@ function shuffle(array) {
 
 // start the quiz
 function displayQuestions() {
-    // Unhide the buttons
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].classList.remove('hide');
-    };
+
+    // show buttons-nextQuestion
+    buttonsNextQuestion.classList.remove('hide');
+    nextQuestionBtn.classList.remove('hide');
 
     // Hide startButton
     startButton.classList.add('hide');
@@ -146,13 +124,18 @@ function displayQuestions() {
     } else if (questionNumber >= 0) {
         questionNumber++;
         console.log(questionNumber)
-    } 
-    
-    // change button to submit score
+    }
+
+    // change nextQuestionBtn to submitQuizBtn
     if (questionNumber >= 9) {
-        nextQuestionBtn.textContent = 'Submit Score';
-    } if (questionNumber >= 10) {
-        alert('all out of questions');
+        nextQuestionBtn.textContent = "Submit Quiz"
+        nextQuestionBtn.addEventListener('click', function () {
+            function hslink() { location.href = "../../highscores.html" };
+            hslink();
+            
+            // makeStuffHappen()
+        });
+
     }
 
     // define answerArr
@@ -177,9 +160,6 @@ function displayQuestions() {
 // Mark answer correct or incorrect
 function markAnswer() {
 
-    // define answered to determine if user has clicked on an answer
-    // let answered = false;
-
     // change button color acording to users choice
     // add to local storage score
     for (let i = 0; i < answers.length; i++) {
@@ -194,9 +174,7 @@ function markAnswer() {
                     // change score
                     score++;
                     currentScore.textContent = "Current Score: " + score;
-                    highScore.textContent = "High Score: " + highScoreScore;
                     localStorage.setItem('Score', score);
-                    localStorage.setItem('High Score', highScoreScore);
                 } else {
                     // revert colors
                     answers[i].classList.add("btn-outline-danger");
@@ -206,16 +184,6 @@ function markAnswer() {
             answered = true;
         };
     };
-}
-
-// Log High score to local storage
-function highScoreStorage() {
-    
-    if (localStorage.getItem('High Score') === '...') {
-        localStorage.setItem('High Score', score)
-    } else if (localStorage.getItem('High Score') >= score) {
-        localStorage.setItem('High Score', localStorage.getItem('High Score'))
-    }
 }
 
 // Move user to the next question
@@ -240,6 +208,9 @@ function startTimer() {
         timer.textContent = "Timer: " + timeLeft;
         if (timeLeft == 0) {
             clearInterval(timeInterval);
+            function hslink() { location.href = "../../highscores.html" };
+            hslink();
+            highScoreScreen();
         }
     }, 1000);
 }
@@ -257,13 +228,13 @@ function makeStuffHappen() {
     // go to the next question using next question button
     nextQuestionBtn.addEventListener('click', nextQuestion)
 
-    // Log high score to local storage
-    highScoreStorage();
-
 }
 
-// Original start
-startScreen();
+// Click the Start button to start quiz
+startButton.addEventListener('click', makeStuffHappen)
+// Timer starts when Start button is clicked
+startButton.addEventListener('click', startTimer)
 
-// Run the timer
-// startTimer();
+
+
+

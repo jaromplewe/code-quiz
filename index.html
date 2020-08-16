@@ -13,6 +13,7 @@
 <body>
     <h1 id="title">Javascript Quiz</h1>
     <div class="container">
+        <!-- timer, score header -->
         <div class="row justify-content-center">
             <div class="col-sm-10">
                 <div class="row justify-content-center mb-0">
@@ -23,20 +24,35 @@
                         Current Score: 0
                     </div>
                     <div id="high-score" class="col-sm-3 text-center">
-                        High Score: 
+                        High Score:
                     </div>
                 </div>
                 <hr class="mt-1 mb-4">
-                <h3 id="question"></h3>
-                <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
-                <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
-                <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
-                <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
-            </div>
-            <div id="blue-button-col" class="col-sm-4">
-                <button id="next-question-btn" class="btn btn-primary" type="submit">Next Question</button>
             </div>
         </div>
+
+        <!-- body content -->
+        <div class="row justify-content-center">
+            <div class="col-sm-10">
+                <h3 id="question">The object is simple: Answer 10 questions in 60 seconds. Let's find out what you're
+                    really
+                    capable of. Are you up for the task? Press the Start Quiz button to enter hell.</h3>
+
+                <div id="buttons-nextQuestion" class="hide">
+                    <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
+                    <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
+                    <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
+                    <button type="button" class="multiple-choice btn btn-outline-secondary"></button>
+                </div>
+                
+                <div id="blue-button-col" class="col-sm-4">
+                    <button id="next-question-btn" class="stack hide btn btn-primary" type="submit">Next Question</button>
+                    <button id="submit-quiz-btn" class="stack hide btn btn-primary" type="submit">Submit Quiz</button>
+                    <button id="start-quiz-btn" class="stack btn btn-primary" type="submit">Start Quiz</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 

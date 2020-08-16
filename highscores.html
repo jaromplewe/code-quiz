@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Scores</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="Assets/style/style.css">
+</head>
+
+<body>
+
+    <h1 id="title">Javascript Quiz</h1>
+    <div class="container">
+        <!-- timer, score header -->
+        <div class="row justify-content-center">
+            <div class="col-sm-10">
+                <div class="row justify-content-center mb-0">
+                    <div id="timer" class="col-sm-3 text-center">
+                        Timer: 60
+                    </div>
+                    <div id="current-score" class="col-sm-4 text-center">
+                        Current Score: 0
+                    </div>
+                    <div id="high-score" class="col-sm-3 text-center">
+                        High Score:
+                    </div>
+                </div>
+                <hr class="mt-1 mb-4">
+            </div>
+        </div>
+
+        <!-- high score page -->
+        <div>
+            <div class="row justify-content-center">
+                <div class="col-sm-10">
+                    <h3 id="record-score">Record your score and see where you landed on the leaderboard!</h3>
+                    <div class="form-group">
+                        <label for="initialsForm">Enter Initials:</label>
+                        <input class="form-control" id="initialsForm" placeholder="JLP" value="">
+                    </div>
+                    <button id="submit-score-btn" class="btn btn-primary" type="submit">Submit Score</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="start-quiz-btn" class="hide stack btn btn-primary" type="submit">Start Quiz</button>
+
+    <script src="Assets/javascript/highscores.js"></script>
+</body>
+
+</html>
