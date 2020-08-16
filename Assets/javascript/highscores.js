@@ -2,7 +2,7 @@
 const submitScoreBtn = document.getElementById('submit-score-btn');
 const initialsForm = document.getElementById('initialsForm');
 
-function highScoreScreen() {
+function submitScreen() {
 
     // Edit the highScoreScore variable
     // localStorage.setItem('highScore', localStorage.getItem('Score'));
@@ -45,5 +45,12 @@ function highScoreScreen() {
     // Parse highScoreScore and display on leaderboard
 }
 
+function highScores () {
+    allScores = localStorage.getItem('allScores');
+    allScoresParse = JSON.parse(allScores);
+    console.log(allScoresParse)
+};
+
 // Click submit score to run highScoreScreen func
-submitScoreBtn.addEventListener('click', highScoreScreen);
+submitScoreBtn.addEventListener('click', submitScreen);
+submitScoreBtn.addEventListener('click', highScores);

@@ -130,7 +130,7 @@ function displayQuestions() {
     if (questionNumber >= 9) {
         nextQuestionBtn.textContent = "Submit Quiz"
         nextQuestionBtn.addEventListener('click', function () {
-            function hslink() { location.href = "../../highscores.html" };
+            function hslink() { location.href = "highscores.html" };
             hslink();
             
             // makeStuffHappen()
@@ -208,9 +208,8 @@ function startTimer() {
         timer.textContent = "Timer: " + timeLeft;
         if (timeLeft == 0) {
             clearInterval(timeInterval);
-            function hslink() { location.href = "../../highscores.html" };
+            function hslink() { location.href = "highscores.html" };
             hslink();
-            highScoreScreen();
         }
     }, 1000);
 }
