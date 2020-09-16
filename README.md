@@ -2,6 +2,10 @@
 
 Practice your Javascript skills with this Javascript quiz!
 
+* Vanilla Javascript
+* LocalStorage
+* Bootstrap CSS Framework
+
 ## How To Play
 
 ```
