@@ -14,3 +14,19 @@ Press the "Start Quiz" button to begin answering quesitons. Once you start, the 
 Enter your initials and submit your score to be entered onto the leaderboard.
 ```
 
+## Screenshots
+
+Start Screen
+![start-screen](./Assets/screenshots/start-screen.png)
+
+Questions:
+* Correct answers display green
+* Incorrect answers display red
+![correct-answer](./Assets/screenshots/correct-answer.png)
+
+Submit Screen:
+* Enter your initials and find out where you lined up on the leaderboard!
+![submit-screen](./Assets/screenshots/submit-screen.png)
+
+Leaderboard:
+![leaderboard](./Assets/screenshots/leaderboard.png)
